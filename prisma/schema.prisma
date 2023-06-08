@@ -1,0 +1,89 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Employee {
+  id        String    @id @default(uuid())
+  empId     Int       @unique
+  name      String    @db.VarChar(100)
+  email     String?   @unique @db.VarChar(100)
+  createdOn DateTime  @default(now())
+  updatedOn DateTime  @updatedAt
+  history   History[]
+  overTime  OverTime?
+}
+
+model Division {
+  id           String     @id @default(uuid())
+  code         String     @unique @db.VarChar(4)
+  name         String     @unique @db.VarChar(50)
+  season       String     @db.Text
+  sdExtent     Decimal?   @db.Decimal(10, 2)
+  vpExtent     Decimal?   @db.Decimal(10, 2)
+  createdOn    DateTime   @default(now())
+  updatedOn    DateTime   @updatedAt
+  field        Field[]
+}
+
+model Field {
+  id             String    @id @default(uuid())
+  division       Division? @relation(fields: [divisionCode], references: [code])
+  divisionCode   String?   @unique
+  code           String    @unique @db.VarChar(5)
+  season         Int?       @db.MediumInt
+}
+
+model CropType {
+  id         String   @id @default(uuid())
+  cropType   String   @db.Text
+  createdOn  DateTime @default(now())
+  updatedOn  DateTime @updatedAt
+}
+
+model Category {
+  id        String   @id @default(uuid())
+  category  String   @db.Text
+  createdOn DateTime @default(now())
+  updatedOn DateTime @updatedAt
+}
+
+model WorkType {
+  id        String   @id @default(uuid())
+  workType  String   @db.Text
+  createdOn DateTime @default(now())
+  updatedOn DateTime @updatedAt
+}
+
+model OverTime {
+  id           String    @id @default(uuid())
+  employee     Employee? @relation(fields: [employeeId], references: [id])
+  employeeId   String?   @unique
+  job          String    @unique @db.VarChar(100)
+  workedDate   DateTime  @db.DateTime()
+  hoursInMins  Int       @db.Int
+  rate         Float     @db.Float
+  total        Float     @db.Float
+  divisionName String    @db.Text
+  fieldName    String    @db.Text
+  categoryName String    @db.Text
+  worktypeName String    @db.Text
+  createdOn    DateTime  @default(now())
+  updatedOn    DateTime  @updatedAt
+  history      History?
+}
+
+model History {
+  id         String    @id @default(uuid())
+  employee   Employee? @relation(fields: [employeeId], references: [id])
+  employeeId String?   @unique
+  overTime   OverTime? @relation(fields: [overTimeId], references: [id])
+  overTimeId String?   @unique
+}
