@@ -19,7 +19,7 @@ export class EmployeeService {
         skip?: number | null,
         take?: number | null,
         orderBy?: Prisma.EmployeeOrderByWithRelationInput
-    }) {
+    }): Promise<Employee[]> {
         const { skip, take, orderBy } = params;
         return this.prisma.employee.findMany({
             skip: skip | 0,
