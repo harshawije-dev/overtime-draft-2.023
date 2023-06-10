@@ -13,6 +13,7 @@ export class EmployeeService {
             where: empId
         })
     }
+
     // List of employee data
     async GetEmployeeListAsync(params: {
         skip?: number | null,
