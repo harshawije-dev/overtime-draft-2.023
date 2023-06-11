@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
-import { History, Prisma } from '@prisma/client';
+import { History } from '@prisma/client';
 
 @Injectable()
 export class EmployeeHistorySpec {
