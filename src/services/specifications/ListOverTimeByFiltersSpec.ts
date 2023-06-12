@@ -8,7 +8,14 @@ export class OvertimeFilterSpec {
     constructor(private prisma: PrismaService) { }
 
     //   By employee name
-    async FilterEmployeeByName(name: string): Promise<OverTime[] | Employee[]> {
+    async FilterEmployeeByName(params: {
+        name: string,
+        take?: number,
+        skip?: number
+    }): Promise<OverTime[] | Employee[]> {
+
+        const { name, take, skip } = params;
+
         const overtimeList = this.prisma.employee.findMany({
             where: {
                 name: name
@@ -16,12 +23,6 @@ export class OvertimeFilterSpec {
             include: {
                 overTime: {
                     select: {
-                        employee: {
-                            select: {
-                                empId: true,
-                                name: true,
-                            }
-                        },
                         job: true,
                         fieldName: true,
                         hoursInMins: true,
@@ -29,7 +30,9 @@ export class OvertimeFilterSpec {
                         total: true
                     }
                 }
-            }
+            },
+            skip: skip | 0,
+            take: take | 10
         });
 
         return overtimeList;
@@ -43,12 +46,6 @@ export class OvertimeFilterSpec {
             include: {
                 overTime: {
                     select: {
-                        employee: {
-                            select: {
-                                empId: true,
-                                name: true,
-                            }
-                        },
                         job: true,
                         fieldName: true,
                         hoursInMins: true,

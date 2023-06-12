@@ -16,8 +16,16 @@ export class OvertimeService {
   }): Promise<OverTime[]> {
     const { skip, take } = params;
     return this.prisma.overTime.findMany({
-      skip,
-      take,
+      include: {
+        employee: {
+          select: {
+            empId: true,
+            name: true,
+          },
+        },
+      },
+      skip: skip | 0,
+      take: take | 10,
     });
   }
   // UPDATE
