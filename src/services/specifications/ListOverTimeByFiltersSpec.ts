@@ -58,7 +58,7 @@ export class OvertimeFilterSpec {
 
         return overtimeList;
     }
-    //   By date
+    // By date
     // By category
     // By work type
 

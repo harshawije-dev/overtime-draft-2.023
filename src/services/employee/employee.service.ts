@@ -18,13 +18,11 @@ export class EmployeeService {
     async GetEmployeeListAsync(params: {
         skip?: number | null,
         take?: number | null,
-        orderBy?: Prisma.EmployeeOrderByWithRelationInput
     }): Promise<Employee[]> {
-        const { skip, take, orderBy } = params;
+        const { skip, take, } = params;
         return this.prisma.employee.findMany({
             skip: skip | 0,
             take: take | 10,
-            orderBy: orderBy
         })
     }
     // Update of employee data
