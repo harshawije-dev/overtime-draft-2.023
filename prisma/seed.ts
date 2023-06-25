@@ -179,7 +179,7 @@ async function main() {
 
     const overtime = await prisma.overTime.upsert({
         where: {
-            employeeId: '63120886-1d18-44be-a1c0-8aa9f58d297c',
+            employeeId: 'f1beae63-108d-49b0-88e5-ce469b49f92b',
         },
         create: {
             job: 'RL Rolling',
@@ -191,10 +191,10 @@ async function main() {
             rate: 1.25,
             categoryName: 'Permanent',
             worktypeName: 'General',
-            employeeId: '63120886-1d18-44be-a1c0-8aa9f58d297c',
+            employeeId: 'f1beae63-108d-49b0-88e5-ce469b49f92b',
             history: {
                 create: {
-                    employeeId: '63120886-1d18-44be-a1c0-8aa9f58d297c',
+                    employeeId: 'f1beae63-108d-49b0-88e5-ce469b49f92b',
                 },
             },
         },
